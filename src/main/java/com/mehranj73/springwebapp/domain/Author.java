@@ -1,12 +1,12 @@
 package com.mehranj73.springwebapp.domain;
 
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * Created by jt on 12/22/19.
+ */
 @Entity
 public class Author {
 
@@ -18,12 +18,14 @@ public class Author {
     private String lastName;
 
     @ManyToMany(mappedBy = "authors")
-    private Set<Book> books;
+    private Set<Book> books = new HashSet<>();
 
-    public Author(String firstName, String lastName, Set<Book> books) {
+    public Author() {
+    }
+
+    public Author(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.books = books;
     }
 
     public Long getId() {
@@ -32,9 +34,6 @@ public class Author {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Author() {
     }
 
     public String getFirstName() {
@@ -61,7 +60,6 @@ public class Author {
         this.books = books;
     }
 
-
     @Override
     public String toString() {
         return "Author{" +
@@ -79,7 +77,7 @@ public class Author {
 
         Author author = (Author) o;
 
-        return Objects.equals(id, author.id);
+        return id != null ? id.equals(author.id) : author.id == null;
     }
 
     @Override
